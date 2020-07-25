@@ -1,0 +1,11 @@
+{% extends 'first/base.html' %}
+{% load static %}
+{% block content %}
+    <p> 수를 하나 입력해 주세요.</p>
+    <!--get으로 number query parameter로 result로 데이터 넘기는 form 생성
+    result/?number=[query] 로 전달 -->
+    <form action="{% url 'result' %}" method="get">
+        <input type="number" name="number"/>
+        <button type="submit">결과보기</button>
+    </form>
+{% endblock %}

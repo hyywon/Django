@@ -1,0 +1,51 @@
+{% extends 'third/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+<!--review data의 항목, -->
+    {% for item in reviews %}
+    <div class="row restaurant-item" style="margin:20px atuo;">
+        <div class="col-sm-12">
+            <div class="card border-secondary">
+            <div class="card-body">
+                <h5 class="card-title">{{ item.restaurant.name }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted"> {{ item.restaurant.address }}</h6>
+                <p class="card-text">{{ item.point }}점 / {{ item.comment }}</p>
+             </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <div class="pagination">
+                <span class="step-links text-center" style="width:100%";>
+<!--            #page변수 포함, filter(hs_previous) method실행, 현재 페이지 전페이지가 존재하는지-->
+                    {% if reviews.has_previous %}
+<!--                 #이전페이지 존재하면 1페이지로 가는 링크-->
+                        <a href="?page=1">&laquo;</a>
+<!--                 #이전페이지 존재하면 페이지의 바로 전페이지로 갈 수 있는 링크-->
+                        <a href="?page={{ reviews.previous_page_number }}">
+                            {{ reviews.previous_page_number }}
+                        </a>
+                    {% endif %}
+<!--                # 현재 페이지 -->
+                    <span class="current">
+<!--                # restaurant number로 현재 페이지를 보여줌-->
+                        {{ reviews.number }}
+                    </span>
+<!--                #page변수 포함, filter(hs_next) method실행, 현재 페이지 다음 페이지가 존재하는지-->
+                    {% if reviews.has_next %}
+<!--                # 다음 페이지가 존재하면-->
+                        <a href="?page={{ reviews.next_page_number }}">
+                            {{ reviews.next_page_number }}
+                        </a>
+                        <a href="?page={{ reviews.paginator.num_pages }} ">&raquo;
+                        </a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

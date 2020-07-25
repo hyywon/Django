@@ -1,0 +1,56 @@
+{% extends 'third/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <h2> Restaurant List </h2>
+    {% for item in restaurants %}
+    <div class="row restaurant-item" style="margin:20px atuo;">
+        <div class="col-sm-12">
+            <div class="card border-secondary">
+            <div class="card-body">
+                <h5 class="card-title">{{ item.name }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted"> {{ item.address }}</h6>
+                <p class="card-text">리뷰 : {{ item.reviews_count }}개, 평점 : {{ item.average_point }} </p>
+                <p class="card-text">음식점 설명</p>
+                <a href="{% url 'restaurant-detail' id=item.id %}" class="card-link">자세히보기</a>
+                <a href="{% url 'restaurant-update' %}?id={{ item.id }}" class="card-link">수정하기</a>
+             </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <div class="pagination">
+                <span class="step-links text-center" style="width:100%";>
+<!--                    #page변수 포함, filter(hs_previous) method실행, 현재 페이지 전페이지가 존재하는지-->
+                    {% if restaurants.has_previous %}
+<!--                        #이전페이지 존재하면 1페이지로 가는 링크-->
+                        <a href="?page=1">&laquo;</a>
+<!--                        #이전페이지 존재하면 페이지의 바로 전페이지로 갈 수 있는 링크-->
+                        <a href="?page={{ restaurants.previous_page_number }}">
+                            {{ restaurants.previous_page_number }}
+                        </a>
+                    {% endif %}
+<!--                    # 현재 페이지 -->
+                    <span class="current">
+<!--                        # restaurant number로 현재 페이지를 보여줌-->
+                        {{ restaurants.number }}
+                    </span>
+<!--                    #page변수 포함, filter(hs_next) method실행, 현재 페이지 다음 페이지가 존재하는지-->
+                    {% if restaurants.has_next %}
+<!--                        # 다음 페이지가 존재하면-->
+                        <a href="?page={{ restaurants.next_page_number }}">
+                            {{ restaurants.next_page_number }}
+
+                        </a>
+                        <a href="?page={{ restaurants.paginator.num_pages }} ">&raquo;
+<!--                            {{ restaurants.paginator.num_pages }}-->
+                        </a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

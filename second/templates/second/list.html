@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Second</title>
+</head>
+<body>
+    {% for item in items %}
+    <div>
+        <h4> {{ item.title }} </h4>
+    </div>
+    <p> {{ item.content }}</p>
+    {% endfor %}
+</body>
+</html>
